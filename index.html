@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AQI Web</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+        <div class="col-md-9 post">      
+      <div id="app">
+        <select name="" id="" class="form-control mb-3" v-model="filter">
+          <option value="default">--- 請選擇城市 ---</option>
+          <option :value="item" v-for="item in location">{{item}}</option>
+        </select>
+        <div>
+          <h4>關注城市</h4>
+          <div class="card-columns">
+            <city v-for="item in stared" :city-data="item" :key="item.SiteName" @following="followingFilter" ><city></city>
+          </div>
+        </div>
+        
+        <hr>
+        <!-- 全部城市 -->
+        <div class="card-columns" >
+          <city v-for="item in fliterCounty" :city-data="item" :key="item.SiteName" @following="followingFilter" v-if="!item.follow"><city>
+        </div>
+      </div>
+              </div>
+      
+      <!-- 卡片模板 -->
+      <script type="text/x-template" id="cityShow">
+        <div class="card" :class="statusColor">
+          <div class="card-header">{{cityData.County}} - {{cityData.SiteName}}
+            <a href="#" class="float-right" @click.prevent="addFollow"><i class="far fa-star" v-if="!cityData.follow"></i><i class="fas fa-star"
+               v-if="cityData.follow"></i></a>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled">
+              <li>AQI 指數: {{cityData.AQI}}</li>
+              <li>PM2.5: {{cityData['PM2.5']}}</li>  <!--  這邊呼叫 PM2.5要改用中括號要注意 -->
+              <li>說明: {{cityData.Status}}</li>
+            </ul>
+          {{cityData.PublishTime}}
+          </div>
+        </div>
+      </script>
+      <!-- 
+      狀態對應表
+      '良好',
+      'status-aqi2' '普通',
+      'status-aqi3' '對敏感族群不健康',
+      'status-aqi4' '對所有族群不健康',
+      'status-aqi5' '非常不健康',
+      'status-aqi6' '危害'
+      --> 
+      <style>
+      .status-aqi2 {
+        background-color: #ffff00;
+      }
+      .status-aqi3 {
+        background-color: #ff7e00;
+      }
+      .status-aqi4 {
+        background-color: #ff0000;
+      }
+      .status-aqi5 {
+        background-color: #8f3f97;
+      }
+      .status-aqi6 {
+        background-color: #7e0023;
+      }
+      </style>
+      
+       
+              </div>
+            </div>
+          </div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://kit.fontawesome.com/7e3354ec65.js"></script>  
+<script src="js/all.js"></script>
+</body>
+</html>
